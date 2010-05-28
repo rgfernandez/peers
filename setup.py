@@ -14,6 +14,7 @@ setup(
     url='',
     install_requires=[
         "Pylons>=0.9.7",
+        "SQLAlchemy>=0.5",
     ],
     setup_requires=["PasteScript>=1.6.3"],
     packages=find_packages(exclude=['ez_setup']),
@@ -28,7 +29,7 @@ setup(
     paster_plugins=['PasteScript', 'Pylons'],
     entry_points="""
     [paste.app_factory]
-    main = peers.wsgiapp:make_app
+    main = peers.config.middleware:make_app
 
     [paste.app_install]
     main = pylons.util:PylonsInstaller
