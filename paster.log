@@ -1,4 +1,1 @@
-/usr/lib/python2.6/dist-packages/elixir/entity.py:412: SADeprecationWarning: Session.mapper is deprecated.  Please see http://www.sqlalchemy.org/trac/wiki/UsageRecipes/SessionAwareMapper for information on how to replicate its behavior.
-  *args, **kwargs)
-Starting server in PID 23947.
-serving on http://203.87.224.237:8085
+
