@@ -9,7 +9,9 @@ from sqlalchemy import engine_from_config
 import peers.lib.app_globals as app_globals
 import peers.lib.helpers
 from peers.config.routing import make_map
-from peers.model import init_model
+#from peers.model import init_model
+
+from peers import model
 
 def load_environment(global_conf, app_conf):
     """Configure the Pylons environment via the ``pylons.config``
@@ -39,7 +41,15 @@ def load_environment(global_conf, app_conf):
 
     # Setup the SQLAlchemy database engine
     engine = engine_from_config(config, 'sqlalchemy.')
-    init_model(engine)
+    #init_model(engine)
+    if model.elixir.options_defaults.get('autoload'):
+        # Reflected tables
+        model.elixir.bind = engine
+        model.metadata.bind = engine
+        model.elixir.setup_all()
+    else:
+        # Non-reflected tables
+        model.init_model(engine)
 
     # CONFIGURATION OPTIONS HERE (note: all config options will override
     # any Pylons config options)

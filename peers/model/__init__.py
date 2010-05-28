@@ -4,6 +4,9 @@ from sqlalchemy import orm
 
 from peers.model import meta
 
+import elixir
+from peers.model.entities import *
+
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
     ## Reflected tables must be defined and mapped here
@@ -12,8 +15,23 @@ def init_model(engine):
     #                           autoload_with=engine)
     #orm.mapper(Reflected, reflected_table)
     #
-    meta.Session.configure(bind=engine)
-    meta.engine = engine
+    #meta.Session.configure(bind=engine)
+    #meta.engine = engine
+    elixir.session.configure(bind=engine)
+    metadata.bind = engine
+
+Session = elixir.session = meta.Session
+metadata = elixir.metadata
+elixir.options_defaults.update({
+    'autoload': True,
+})
+
+if ( elixir.options_defaults.get('autoload', False)
+     and not metadata.is_bound() ):
+    elixir.delay_setup = True
+
+if not elixir.options_defaults.get('autoload', False):
+    elixir.setup_all(True)
 
 
 ## Non-reflected tables may be defined and mapped at module level
