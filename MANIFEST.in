@@ -1,0 +1,3 @@
+include peers/config/deployment.ini_tmpl
+recursive-include peers/public *
+recursive-include peers/templates *
