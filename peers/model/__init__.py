@@ -5,7 +5,7 @@ from sqlalchemy import orm
 from peers.model import meta
 
 import elixir
-from peers.model.entities import *
+from peers.model import entities as e
 
 def init_model(engine):
     """Call me before using any of the tables or classes in the model"""
@@ -24,6 +24,7 @@ Session = elixir.session = meta.Session
 metadata = elixir.metadata
 elixir.options_defaults.update({
     'autoload': True,
+    'auto_primarykey': False,
 })
 
 if ( elixir.options_defaults.get('autoload', False)

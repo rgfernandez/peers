@@ -24,5 +24,6 @@ def make_map():
     map.connect('/{controller}/{action}/{id}')
 
     map.resource('person', 'persons')
+    map.resource('message', 'messages')
 
     return map

@@ -5,7 +5,7 @@ from pylons.controllers.util import abort, redirect_to
 
 from peers.lib.base import BaseController, render
 
-from peers import model as m
+from peers.lib import helpers as h
 
 log = logging.getLogger(__name__)
 
@@ -18,15 +18,23 @@ class PersonsController(BaseController):
     def index(self, format='html'):
         """GET /persons: All items in the collection"""
         # url('persons')
-        return '<br>'.join([i for i in dir(m.meta.Session.query(m.Person))])
+        #return '<br>'.join([i for i in dir(m.meta.Session.query(m.e.Person))])
+        #redirect_to(controller='persons',action='create')
+        session['test'] = 'testing'
+        session.save()
+        return '<a href="persons/create">hi</a>'
 
     def create(self):
         """POST /persons: Create a new item"""
         # url('persons')
+        return '<br>'.join(['%s: %r' % (key, value) for (key,value) in request.environ.items()])
+        #return '<br>'.join(['%s: %r' % (elem,item) for (elem,item) in request.headers.items()])
+        #return session['test']
 
     def new(self, format='html'):
         """GET /persons/new: Form to create a new item"""
         # url('new_person')
+        return render('/person.mako')
 
     def update(self, id):
         """PUT /persons/id: Update an existing item"""

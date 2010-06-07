@@ -1,0 +1,38 @@
+/* MARGIN SETTINGS         */
+html {margin:1em;}
+nav ul {margin-bottom:1em;}
+nav ul.menu a {padding:0.5em;}
+notes h3 {text-align:center;margin-top:0.2em;padding:0.5em 0;}
+notes h3:first-child {margin-top:0;}
+footer {margin-bottom:1em;text-align:center;}
+section,aside {margin:1em 0;}
+article {margin:0.5em 0 1.1em 0;}
+article:last-child {margin-bottom:0;}
+a.summary {margin:0.2em 0;padding:0.5em;}
+h3.author {margin-top:1em;}
+/* ORDER SETTINGS          */
+header h1,notes h3,section,article,h3.author,a.summary,time.timeago,aside,footer {display:block;}
+header h1,notes h3,footer {clear:both;}
+header h1 {text-align:right;}
+nav li {display:inline;}
+nav ul.menu,section {float:left;}
+nav ul.management {float:right;}
+/* DISPLAY SETTINGS        */
+header,footer,h2,h3,h4,time.timeago {font-family:Georgia,"Times New Roman",Times,serif;}
+h1,h2 {font-weight:normal;font-size:1.35em;letter-spacing:0.1em;}
+h3,h4,h5,h6 {font-weight:normal;font-size:1.1em;}
+h4 {font-size:.9em;font-weight:bold;}
+body {font-family:Arial,Helvetica,sans-serif;color:#002f2f;background:#fff;}
+a {border-bottom:1px dotted #555;text-decoration:none;color:#f00;}
+nav ul.management li:after {content:" |";}
+nav ul.management li:last-child:after {content:"";}
+nav ul.menu a {border:1px solid #000;font-weight:bold;text-decoration:none;background:transparent;color:#000;height:0;}
+nav ul.menu a:hover {background:indianred;color:#fff;}
+notes h3 a {color:darkred}
+h3.info {background:palegreen}
+h3.warn {background:khaki}
+h3.error {background:burlywood}
+a.summary {border:1px solid #000;overflow:auto;color:#000;line-height:1.2em;}
+a.summary:hover {background:gray;color:#fff;}
+a.summary a {border-bottom:0;text-decoration:none;color:#000;}
+time.timeago {font-variant:small-caps;}
