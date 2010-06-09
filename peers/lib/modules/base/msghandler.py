@@ -35,7 +35,7 @@ def valid_phone(c):
         return ''
     return c
 
-def create_message(mode, **p):
+def create_message(mode, p):
     if 'name' in p:
         fn = p['name']
     else:

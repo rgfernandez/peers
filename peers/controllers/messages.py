@@ -23,15 +23,16 @@ class MessagesController(BaseController):
     def create(self):
         """POST /messages: Create a new item"""
         # url('messages')
-        #if not modules.validated(request, url='messages/new'):
-        #    abort(404, '')
+        ## no need to validate. this method is exposed to everyone
         if not modules.base.msghandler.create_message('http', request.params):
             abort(501, '')
-        return 'TESTING'
+        return ''
 
     def new(self, format='html'):
         """GET /messages/new: Form to create a new item"""
         # url('new_message')
+        #if not modules.validated(request, url='messages/new'):
+        #    abort(404, '')
         return render('/message.mako')
 
     def update(self, id):

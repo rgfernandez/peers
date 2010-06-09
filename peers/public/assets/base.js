@@ -2,14 +2,30 @@
 String.prototype.trim = function() {return (this.replace(/^[\s\xA0]+/, "").replace(/[\s\xA0]+$/, ""))}
 String.prototype.startsWith = function(str) {return (this.match("^"+str)==str)}
 
+function binders() {
+    $(window).bind("resize", update_css);
+    
+    $("#new").click(get_handler_new);
+    $("#incoming").click(get_handler_new);
+    $("#viewed").click(get_handler_new);
+}
+
+function get_handler_new() {
+    var cur = $("section articles");
+    $.get("messages/new", function(data) {
+        cur.empty();
+        cur.html(data);
+    });
+    $("section").hide();
+    $("#refer_feed").show();
+}
+
 function update_feeds() {
     /* referral feed */
-    $("section h2").text("REFERRAL");
-    load_feed("http://rss.news.yahoo.com/rss/topstories", $("section articles"), 1);
+    load_feed("http://rss.news.yahoo.com/rss/topstories", $("#refer_feed articles"), 1);
     /* news feed */
-    $("aside h2").text("NEWS");
-//    load_feed("http://earthquake.usgs.gov/earthquakes/catalogs/1day-M2.5.xml", $("aside articles"));
-    load_feed("topstories.xml", $("aside articles"));
+    load_feed("http://earthquake.usgs.gov/earthquakes/catalogs/1day-M2.5.xml", $("#news_feed articles"));
+//    load_feed("topstories.xml", $("#news_feed articles"));
     return 1;
 }
 
@@ -17,29 +33,23 @@ function load_feed(url,loc,pre) {
     var data=null;
     if (!pre) {pre=0;}
     if (url.startsWith('http://')) {
-        $.jGFeed(url,
-            function(feed) {
-                if(!feed) {
-                    add_note("error",url+" fail");
-                    return null;
-                }
-                data = feed;
-                if (process_feed(feed,loc,pre)) {
-                    add_note("info",url+" successfully loaded");
-                }
-            },
-            5
-        );
-    } else {
-        $.getFeed({
-            url: url,
-            success: function(feed) {
-                data = feed;
-                if (process_feed(feed,loc,pre)) {
-                    add_note("info",url+" successfully loaded");
-                }
+        $.jGFeed(url, function(feed) {
+            if(!feed) {
+                add_note("error",url+" fail");
+                return null;
             }
-        });
+            data = feed;
+            if (process_feed(feed,loc,pre)) {
+                add_note("info",url+" successfully loaded");
+            }
+        }, 5);
+    } else {
+        $.getFeed({url: url, success: function(feed) {
+            data = feed;
+            if (process_feed(feed,loc,pre)) {
+                add_note("info",url+" successfully loaded");
+            }
+        }});
     }
     return data;
 }
@@ -110,18 +120,13 @@ function select_article(event) {
         default:
             return 1;
     }
-    $.ajax({
-        type:   "POST",
-        url:    "http://127.0.0.1:5000/messages/create",
-        data:   ({
-                    name:       "John",
-                    contact:    "639171234567",
-                    headers:    "hello:world\ntesting : new",
-                    body:       c.attr("id")
-                }),
-        success: function(data){
-                    alert(data);
-                }
+    $.post("messages/create", {
+        name:       "John",
+        contact:    "639171234567",
+        headers:    "hello:world\ntesting : new",
+        body:       c.attr("id")
+        }, function(data) {
+            alert(data);
     });
     add_note("warn",c.attr("id"));
     return 0;
@@ -154,9 +159,9 @@ function update_css() {
     return 1;
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     update_feeds();
     update_css();
-    $(window).bind("resize", update_css);
+    binders();
     $.fn.cuteTime.settings.refresh=60000; // refresh every minute
 });
